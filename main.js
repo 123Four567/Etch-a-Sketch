@@ -1,71 +1,28 @@
 const container = document.querySelector('#container')
-let div;
-let num = 4
+let num = 8;
 let nodeList = []
+let width = (800/num) + 'px'
 
 function addSquares() {
 	return num * num
+	
 }
 
 function sketch(divCount) {
-	divCount = addSquares()
-	if (divCount == 16){
+	if (num > 100) {
+		alert('Value is too high')
+	} else if (num < 100){
+		divCount = addSquares()
 		for (let i = 0; i < divCount; i++){
-			div = document.createElement('div')
+			let div = document.createElement('div')
 			div.className = 'square'
-			div.style.width = '100px'
+			div.style.width = width
 			nodeList.push(div)
 			container.appendChild(div)
 		}
-	} else if (divCount == 25) {
-		for (let i = 0; i < divCount; i++){
-			div = document.createElement('div')
-			div.className = 'square'
-			div.style.width = '80px'
-			nodeList.push(div)
-			container.appendChild(div)
-		}
-	} else if (divCount == 36) {
-		for (let i = 0; i < divCount; i++){
-			div = document.createElement('div')
-			div.className = 'square'
-			div.style.width = '66.66px'
-			nodeList.push(div)
-			container.appendChild(div)
-		}
-	} else if (divCount == 49) {
-		for (let i = 0; i < divCount; i++){
-			div = document.createElement('div')
-			div.className = 'square'
-			div.style.width = '57.14px'
-			nodeList.push(div)
-			container.appendChild(div)
-		}
-	} else if (divCount == 64) {
-		for (let i = 0; i < divCount; i++){
-			div = document.createElement('div')
-			div.className = 'square'
-			div.style.width = '50px'
-			nodeList.push(div)
-			container.appendChild(div)
-		}
-	} else if (divCount == 81) {
-		for (let i = 0; i < divCount; i++){
-			div = document.createElement('div')
-			div.className = 'square'
-			div.style.width = '44.44px'
-			nodeList.push(div)
-			container.appendChild(div)
-		}
-	} else if (divCount == 100) {
-		for (let i = 0; i < divCount; i++){
-			div = document.createElement('div')
-			div.className = 'square'
-			div.style.width = '40px'
-			nodeList.push(div)
-			container.appendChild(div)
-		}
+		addEvent(nodeList)
 	}
+	
 }
 
 sketch()
@@ -76,32 +33,17 @@ function addEvent(nodeList) {
 	})
 }
 
-addEvent(nodeList)
+function changeNum(){
+	num = prompt('Enter a number (Between 1 and 100)')
+	width = (800/num).toFixed(2) + 'px'
+	nodeList.forEach( div => div.remove())
+	sketch(addSquares())
+	addEvent(nodeList)
+	
+}
 
 let reset = document.querySelector('#reset').addEventListener('click', () => {
-	nodeList.forEach( div => { div.style.backgroundColor = 'mistyrose' })
+	nodeList.forEach( div => { div.style.backgroundColor = 'mistyrose'})
 })
 
-let moreSquares = document.querySelector('#more').addEventListener('click', () => {
-	if (num < 10) {
-		num++
-		nodeList.forEach( div => {
-			div.remove()
-		})
-
-		sketch(addSquares())
-		addEvent(nodeList)
-	}
-})
-
-let lestSquares = document.querySelector('#less').addEventListener('click', () => {
-	if (num > 4) {
-		num--
-		nodeList.forEach( div => {
-			div.remove()
-		})
-
-		sketch(addSquares())
-		addEvent(nodeList)
-	}
-})
+let moreSquares = document.querySelector('#more').addEventListener('click', changeNum)
